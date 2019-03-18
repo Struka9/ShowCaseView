@@ -38,9 +38,9 @@ public class GuideView extends FrameLayout {
 
     static final String TAG = "GuideView";
 
+    private static final long DEFAULT_ANIM_DURATION       = 700;
     private static final int INDICATOR_HEIGHT              = 40;
     private static final int MESSAGE_VIEW_PADDING          = 5;
-    private static final int SIZE_ANIMATION_DURATION       = 700;
     private static final int APPEARING_ANIMATION_DURATION  = 400;
     private static final int CIRCLE_INDICATOR_SIZE         = 6;
     private static final int LINE_INDICATOR_WIDTH_SIZE     = 3;
@@ -78,6 +78,7 @@ public class GuideView extends FrameLayout {
     private float marginGuide;
     private float strokeCircleWidth;
     private float indicatorHeight;
+    private long animationDuration;
 
     private boolean isPerformedAnimationSize = false;
 
@@ -163,7 +164,7 @@ public class GuideView extends FrameLayout {
                 }
             });
 
-            linePositionAnimator.setDuration(SIZE_ANIMATION_DURATION);
+            linePositionAnimator.setDuration(animationDuration);
             linePositionAnimator.start();
             linePositionAnimator.addListener(new Animator.AnimatorListener() {
                 @Override
@@ -173,7 +174,7 @@ public class GuideView extends FrameLayout {
 
                 @Override
                 public void onAnimationEnd(Animator animator) {
-                    circleSizeAnimator.setDuration(SIZE_ANIMATION_DURATION);
+                    circleSizeAnimator.setDuration(animationDuration);
                     circleSizeAnimator.start();
                     isPerformedAnimationSize = true;
                 }
@@ -420,6 +421,7 @@ public class GuideView extends FrameLayout {
         private float circleIndicatorSize;
         private float circleInnerIndicatorSize;
         private float strokeCircleWidth;
+        private long animationDuration;
 
         public Builder(Context context) {
             this.context = context;
@@ -447,6 +449,14 @@ public class GuideView extends FrameLayout {
          **/
         public Builder setTitle(String title) {
             this.title = title;
+            return this;
+        }
+
+        /**
+         * defining the duration of the line's animation
+         */
+        public Builder setAnimDuration(long duration) {
+            this.animationDuration = duration;
             return this;
         }
 
@@ -621,6 +631,12 @@ public class GuideView extends FrameLayout {
             }
             if (strokeCircleWidth != 0) {
                 guideView.strokeCircleWidth = strokeCircleWidth * density;
+            }
+
+            if (animationDuration <= 0) {
+                guideView.animationDuration = DEFAULT_ANIM_DURATION;
+            } else {
+                guideView.animationDuration = animationDuration;
             }
 
             return guideView;

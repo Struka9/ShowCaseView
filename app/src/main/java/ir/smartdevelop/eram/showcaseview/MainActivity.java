@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 .setGravity(Gravity.center)
                 .setDismissType(DismissType.outside)
                 .setTargetView(view1)
+                .setAnimDuration(400)
                 .setGuideListener(new GuideListener() {
                     @Override
                     public void onDismiss(View view) {
